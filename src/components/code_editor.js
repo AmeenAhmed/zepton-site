@@ -1,8 +1,14 @@
 import { createApp, render, createState, $, $each, $if, $component, $html, $key } from 'zepton';
 import { fade, zoom, slideDown, slideUp, slideLeft, slideRight, fadeDown, fadeUp, fadeLeft, fadeRight } from 'zepton/transitions';
+/*
 import '../vendor/codemirror/lib/codemirror.js';
 import '../vendor/codemirror/lib/codemirror.css';
 import '../vendor/codemirror/mode/javascript/javascript.js';
+*/
+import CodeMirror from 'codemirror';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/javascript/javascript.js';
+
 import { transform } from '@babel/standalone';
 import _ from 'lodash'
 

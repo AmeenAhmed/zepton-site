@@ -1,10 +1,11 @@
 import { render, $ } from 'zepton';
 import RouterLink from './router-link.js';
+import logoFull from '../assets/img/logo-full.png';
 
 export default function() {
   const template = $('header',
     $('.container',
-      $('a', { href: '/' }, $('img.logo', { src: 'src/assets/img/logo-full.png' })),
+      $('a', { href: '/' }, $('img.logo', { src: logoFull })),
       $('.nav',
         RouterLink({ href: '/tutorial', text: 'Tutorial' }),
         RouterLink({ href: '/docs', text: 'Docs' }),

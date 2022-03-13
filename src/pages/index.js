@@ -1,11 +1,12 @@
 import { render, $ } from 'zepton';
 import Router from '../utils/router.js';
 import Footer from '../components/footer.js';
+import logoFull from '../assets/img/logo-full.png';
 
 export default function() {
   const template = $('.index-page.page', 
     $('section.hero', $('.container', 
-      $('img', { src: 'src/assets/img/logo-full.png' }),
+      $('img', { src: logoFull }),
       $('.title', 'A small and flexible Javascript library for building user interfaces.'),
       $('.cta',
         $('button.primary', 'Get Started', { $click: ev => Router.push('/docs') }),
