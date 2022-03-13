@@ -1,0 +1,606 @@
+@import 'colors.scss';
+
+div, header {
+  box-sizing: border-box;
+}
+
+a, a:link, a:hover, a:visited {
+  color: $text-color;
+}
+
+:root {
+  font-size: 10px;
+  --code-fs: 1.4444rem;
+  --h6: 1.6rem;
+  --h5: 1.6rem;
+  --h4: 1.8rem;
+  --h3: 2.4rem;
+  --h2: 3rem;
+  --h1: 4rem;
+  --linemax: 72rem;
+  --lh: 1.5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", Arial;
+  color: $text-color;
+  line-height: var(--lh);
+  width: 100%;
+}
+
+h1 {
+  font-size: var(--h1);
+  margin: 0;
+}
+
+h2 {
+  font-size: var(--h2);
+  margin: 0;
+}
+
+h3 {
+  font-size: var(--h3);
+  margin: 0;
+}
+
+h4 {
+  font-size: var(--h4);
+  margin: 0;
+}
+
+h5 {
+  font-size: var(--h5);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+hr {
+  height: 1px;
+  border: 0;
+  border-top: 1px solid $border-color;
+  margin: 32px 0;
+}
+
+
+
+
+
+.container {
+  width: 102rem;
+  margin: auto;
+}
+
+.page {
+  width: 100vw; 
+  min-height: calc(100vh - 6.4rem);
+  margin-top: 64px;
+}
+
+header {
+  height: 6.4rem;
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  align-items: stretch;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background-color: #fff;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  img {
+    height: 3.2rem;
+  }
+
+  .nav {
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+
+    a {
+      display: flex;
+      align-items: center;
+      padding: 0 1.2rem;
+      font-size: 1.4rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+
+  .tray {
+    a {
+      font-size: 2rem;
+    }
+  }
+}
+
+.index-page {
+  section.hero {
+    padding: 100px 0;
+    border-bottom: 1px solid $border-color;
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    img {
+      height: 9.6rem;
+      margin-bottom: 4rem;
+    }
+
+    .title {
+      font-size: 4.2rem;
+      margin-bottom: 4rem;
+      text-align: center;
+      font-weight: 600;
+      width: 81.6rem;
+      line-height: 1.6em;
+    }
+
+    .cta {
+      button {
+        margin: 0 12px;
+      }
+    }
+  }
+
+  section.features {
+    padding: 6rem 0;
+    border-bottom: 1px solid $border-color;
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .feature {
+      max-width: 18rem;
+
+      .feature-title {
+        font-size: 2.4rem;
+        font-weight: 600;
+        margin-bottom: 1.2rem;
+      }
+
+      .feature-text {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}
+
+.docs-page {
+  display: flex;
+
+  aside {
+    padding: 2.4rem;
+    border-right: 1px solid $border-color;
+    width: 24rem;
+    position: fixed;
+    left: 0;
+    height: 100vh;
+    overflow: scroll;
+    box-sizing: border-box;
+    padding-bottom: 10rem;
+
+    .title {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin: 0.8rem;
+      text-decoration: none;
+      &:hover {
+        color: $primary;
+      }
+    }
+
+    .link {
+      font-size: 1.4rem;
+      margin: .8rem;
+      display: block;
+      text-decoration: none;
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+
+  .content {
+    flex: 1;
+    padding: 3.2rem;
+    margin-left: 24rem;
+
+    .docs-container {
+      & > div {
+        h1 {
+          padding-top: 120px;
+          margin-top: -120px;
+          font-size: var(--h1);
+        }
+
+        h2 {
+          margin: 24px 0;
+          padding-top: 100px;
+          margin-top: -100px;
+          font-size: var(--h2);
+        }
+
+        h3 {
+          margin: 16px 0;
+          font-size: var(--h3);
+          code {
+            background-color: $background-color;
+            padding: 4px 8px;
+            border-radius: 4px;
+          }
+        }
+
+        h4 {
+          margin: 8px 0;
+        }
+
+        p {
+          font-size: 1.6rem;
+          line-height: 1.6em;
+          max-width: var(--linemax);
+          code {
+            font-size: 1.4rem;
+            background-color: $background-color;
+            padding: 4px 8px;
+            border-radius: 4px;
+          }
+        }
+
+        ul, ol {
+          font-size: 16px;
+          li {
+            line-height: 3rem;
+          }
+          code {
+            font-size: 1.4rem;
+            background-color: $background-color;
+            padding: 4px 8px;
+            border-radius: 4px;
+          }
+        }
+
+        pre {
+          margin: 32px 0 !important;
+          padding: 16px !important;
+          border-radius: 8px !important;
+          max-width: var(--linemax);
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+}
+
+.repl {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  .left-panel, .right-panel  {
+    flex: 1;
+    box-sizing: border-box;
+  }
+
+  .code-editor {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .codemirror-root {
+      flex: 1;
+      .CodeMirror {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .right-panel {
+    font-size: 1.6rem;
+    padding: 12px;
+    position: relative;
+
+    .error-msg {
+      padding: 8px;
+      font-size: 1.4rem;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      background-color: $danger;
+      color: $white;
+      font-weight: 600;
+      white-space: pre-wrap;
+
+      i {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  &.rows {
+    flex-direction: column;
+
+    .left-panel {
+      border-bottom: 1px solid $border-color;
+
+      .CodeMirror {
+        height: calc(50vh - 3.2rem - 2.4rem);
+      }
+    }
+  }
+
+  &.cols {
+    flex-direction: row;
+    height: calc(100vh - 6.4rem);
+
+    .left-panel {
+      border-right: 1px solid $border-color;
+    }
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 6rem 0;
+}
+ 
+button.primary {
+  font-size: 1.4rem;
+  font-weight: 600;
+  padding: 10px 2.4rem;
+  background-color: $primary;
+  color: $white;
+  border: none;
+  outline: none;
+  border-radius: .4rem;
+  line-height: 1.6em;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: inset 0 0 0 10rem rgba(0, 0, 0, 0.1);
+  }
+}
+
+.codemirror-root {
+  font-size: var(--code-fs);
+}
+
+.code-editor {
+  font-size: var(--h6);
+  .tabs {
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    .tab {
+      padding: 8px 12px;
+      font-size: 1.4rem;
+      font-family: monospace;
+
+      &.active {
+        border-bottom: 4px solid $primary;
+        font-weight: 600;
+      }
+
+      .file-name {
+        display: inline-flex;
+        border: none;
+        outline: none;
+        font-family: monospace;
+        font-size: 1.4rem;
+        padding: 0;
+        &.edit-mode {
+          color: $success;
+        }
+      }
+    }
+
+    .add-file {
+      font-size: 1.4rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}
+
+
+.tutorial-page {
+  display: flex;
+  height: calc(100vh - 64px);
+
+  .tutorial-container {
+    width: 480px;
+    border-right: 1px solid $border-color;
+
+    .tutorial-header {
+      display: flex;
+      align-items: center;
+      font-size: var(--h4);
+      padding: 8px 16px;
+      border-bottom: 1px solid $border-color;
+      position: relative;
+
+      .number {
+        font-size: 1.2rem;
+        color: $text-color-light;
+      }
+
+      select {
+        margin-left: 12px;
+        appearance: none;
+        font-weight: 500;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 8px;
+        flex: 1;
+      }
+
+      .left {
+        font-size: 1.4rem;
+      }
+
+      .right {
+        font-size: 1.4rem;
+      }
+
+      .down {
+        position: absolute;
+        right: 48px;
+        font-size: 1.4rem;
+        pointer-events: none;
+      }
+
+      button {
+        padding: 8px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        &:hover {
+          color: $primary;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .tutorial-text-container {
+      padding: 20px;
+      font-size: 1.6rem;
+      max-height: calc(100vh - 64px - 54px - 72px);
+      overflow: scroll;
+
+      a:hover {
+        color: $primary;
+      }
+
+      h2 {
+        font-size: var(--h2);
+        margin: 20px 0;
+      }
+
+      p {
+        margin: 12px;
+        code {
+          font-size: 1.4rem;
+          background-color: $code-background;
+          color: $code-color;
+          padding: 4px 8px;
+          border-radius: 4px;
+        }
+      }
+
+      pre {
+       padding: 0.8rem;
+        code {
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    .tutorial-footer {
+      display: flex;
+      padding: 20px;
+      
+      button {
+        font-size: 1.4rem;
+        font-weight: 600;
+        padding: 8px 12px;
+        border: none;
+        outline: none;
+        border-radius: 4px;
+        cursor: pointer;
+        
+        &.show {
+          background-color: $primary;
+          color: $white;
+        }
+
+        &.next {
+          margin-left: auto;
+
+          i {
+            margin-left: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  .repl-container {
+    flex: 1;
+  }
+}
+
+.examples-page {
+  display: flex;
+  .examples-list {
+    width: 240px;
+    height: calc(100vh - 6.4rem);
+    padding: 16px 0;
+    border-right: 1px solid $border-color;
+    flex-shrink: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    .example {
+      font-size: 1.4rem;
+      padding: 8px 16px;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover {
+        color: $primary;
+        background-color: $background-color;
+      }
+      
+      &.active {
+        color: $primary;
+      }
+    }
+  }
+
+  .repl-container {
+    flex: 1;
+    .left-panel {
+      .CodeMirror {
+        height: calc(50vh - 3.2rem - 2.4rem);
+        width: calc(100vw - 200px);
+      }
+    }
+  }
+}
