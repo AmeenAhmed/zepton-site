@@ -18,6 +18,6 @@
     "prismjs": "^1.26.0",
     "showdown": "^2.0.0",
     "slugify": "^1.6.5",
-    "zepton": "file:../zepton"
+    "zepton": "^0.2.1"
   }
 }
