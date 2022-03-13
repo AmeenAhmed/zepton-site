@@ -39,8 +39,8 @@ export default function() {
       })),
       $('.tutorial-footer', 
         $if(_ => Tutorials[state.tutorial].hasEnd, _ => [
-          $('button.show', 'Show me', {
-            $click: ev => state.which = 'end'
+          $('button.show', _ => state.which === 'start' ? 'Show me' : 'Reset', {
+            $click: ev => state.which = state.which === 'start' ? 'end' : 'start'
           }),
         ]),
         $('button.next', 'Next', $('i.fa.fa-arrow-right'), {
