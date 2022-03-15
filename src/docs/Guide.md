@@ -22,6 +22,12 @@ To use it with a build tool like vite for example (which is recommended), first 
 $ npm create vite@latest
 ```
 
+Then install Zepton.
+
+```shell
+$ npm install zepton --save
+```
+
 Then empty the main.js file and paste the following code:
 
 ```javascript
