@@ -14,6 +14,10 @@ import tutorial13 from '../docs/tutorial/passing-props-to-components.md?raw';
 import tutorial14 from '../docs/tutorial/component-events.md?raw';
 import tutorial15 from '../docs/tutorial/component-slots.md?raw';
 import tutorial16 from '../docs/tutorial/dynamic-components.md?raw';
+import tutorial17 from '../docs/tutorial/transitions.md?raw';
+import tutorial18 from '../docs/tutorial/custom-transitions.md?raw';
+import tutorial19 from '../docs/tutorial/different-in-and-out-transitions.md?raw';
+import tutorial20 from '../docs/tutorial/key-block.md?raw';
 
 
 export default [
@@ -1078,5 +1082,339 @@ export default function ChildComponent() {
   },
   tutorial: tutorial16,
   hasEnd: false
- }
+ },
+  {
+    name: 'Transitions',
+    start: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+
+import { render, createState, $, $each } from 'zepton';
+
+export default function() {
+  const state = createState({
+    list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    count: 10
+  });
+  const template = $('.view',
+    $('.list',
+      { style: 'display: flex; gap: 8px;' },
+      $each(state.list, item => item, (item, index) => [
+        $('.item', _ => item())
+      ])
+    ),
+    $('.buttons',
+      { style: 'margin-top: 40px; display: flex; gap: 8px;' },
+      $('button', 'Add', { $click: ev => state.list.push(++state.count) }),
+      $('button', 'Remove', { $click: ev => state.list.shift() })
+    )
+  );
+
+  return render({ state, template });
+}
+
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    end: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+
+import { render, createState, $, $each } from 'zepton';
+import { fadeDown } from 'zepton/transitions';
+
+export default function() {
+  const state = createState({
+    list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    count: 10
+  });
+  const template = $('.view',
+    $('.list',
+      { style: 'display: flex; gap: 8px;' },
+      $each(state.list, item => item, (item, index) => [
+        $('.item', _ => item(), { transition: { fn: fadeDown } })
+      ])
+    ),
+    $('.buttons',
+      { style: 'margin-top: 40px; display: flex; gap: 8px;' },
+      $('button', 'Add', { $click: ev => state.list.push(++state.count) }),
+      $('button', 'Remove', { $click: ev => state.list.shift() })
+    )
+  );
+
+  return render({ state, template });
+}
+
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    tutorial: tutorial17,
+    hasEnd: true
+  },
+  {
+    name: 'Custom transitions',
+    start: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+
+import { render, createState, $, $each } from 'zepton';
+
+export default function() {
+  const state = createState({
+    list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    count: 10
+  });
+  const template = $('.view',
+    $('.list',
+      { style: 'display: flex; gap: 8px;' },
+      $each(state.list, item => item, (item, index) => [
+        $('.item', _ => item())
+      ])
+    ),
+    $('.buttons',
+      { style: 'margin-top: 40px; display: flex; gap: 8px;' },
+      $('button', 'Add', { $click: ev => state.list.push(++state.count) }),
+      $('button', 'Remove', { $click: ev => state.list.shift() })
+    )
+  );
+
+  return render({ state, template });
+}
+
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    end: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+
+import { render, createState, $, $each } from 'zepton';
+
+function rotate({delay = 0, duration = 200, easing = 'ease-out'} = {}) {
+  return {
+    delay,
+    duration,
+    easing,
+    in: {
+      transform: ['rotate(360deg)', 'rotate(0deg)'], 
+    },
+    out: {
+      transform: ['rotate(0deg)', 'rotate(360deg)']
+    }
+  };
+}
+
+export default function() {
+  const state = createState({
+    list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    count: 10
+  });
+  const template = $('.view',
+    $('.list',
+      { style: 'display: flex; gap: 8px;' },
+      $each(state.list, item => item, (item, index) => [
+        $('.item', _ => item(), { transition: { fn: rotate } })
+      ])
+    ),
+    $('.buttons',
+      { style: 'margin-top: 40px; display: flex; gap: 8px;' },
+      $('button', 'Add', { $click: ev => state.list.push(++state.count) }),
+      $('button', 'Remove', { $click: ev => state.list.shift() })
+    )
+  );
+
+  return render({ state, template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    tutorial: tutorial18,
+    hasEnd: true
+  },
+  {
+    name: 'In and out transitions',
+    start: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+
+import { render, createState, $, $each } from 'zepton';
+
+export default function() {
+  const state = createState({
+    list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    count: 10
+  });
+  const template = $('.view',
+    $('.list',
+      { style: 'display: flex; gap: 8px;' },
+      $each(state.list, item => item, (item, index) => [
+        $('.item', _ => item())
+      ])
+    ),
+    $('.buttons',
+      { style: 'margin-top: 40px; display: flex; gap: 8px;' },
+      $('button', 'Add', { $click: ev => state.list.push(++state.count) }),
+      $('button', 'Remove', { $click: ev => state.list.shift() })
+    )
+  );
+
+  return render({ state, template });
+}
+
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    end: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, createState, $, $each } from 'zepton';
+import { fadeUp, zoom } from 'zepton/transitions';
+
+export default function() {
+  const state = createState({
+    list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    count: 10
+  });
+  const template = $('.view',
+    $('.list',
+      { style: 'display: flex; gap: 8px;' },
+      $each(state.list, item => item, (item, index) => [
+        $('.item', _ => item(), { in: { fn: zoom }, out: { fn: fadeUp } })
+      ])
+    ),
+    $('.buttons',
+      { style: 'margin-top: 40px; display: flex; gap: 8px;' },
+      $('button', 'Add', { $click: ev => state.list.push(++state.count) }),
+      $('button', 'Remove', { $click: ev => state.list.shift() })
+    )
+  );
+
+  return render({ state, template });
+}
+
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    tutorial: tutorial19,
+    hasEnd: true
+  },
+  {
+    name: 'Key block',
+    start: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, createState, $ } from 'zepton';
+import { fadeUp } from 'zepton/transitions';
+
+export default function() {
+  const state = createState({
+    count: 1
+  });
+  const template = $('.view',
+    { style: 'display: flex;' },
+    $('.count', _ => state.count, { transition: { fn: fadeUp } }),
+    $('.buttons',
+      $('button', 'Add', { $click: ev => state.count++ }),
+    )
+  );
+
+  return render({ state, template });
+}
+
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    end: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, createState, $, $key } from 'zepton';
+import { fadeUp } from 'zepton/transitions';
+
+export default function() {
+  const state = createState({
+    count: 1
+  });
+  const template = $('.view',
+    { style: 'display: flex;' },
+    $key(_ => state.count, _ => [
+      $('.count', _ => state.count, { transition: { fn: fadeUp } })
+    ]),
+    $('.buttons',
+      $('button', 'Add', { $click: ev => state.count++ }),
+    )
+  );
+
+  return render({ state, template });
+}
+
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    tutorial: tutorial20,
+    hasEnd: true
+  }
 ]
