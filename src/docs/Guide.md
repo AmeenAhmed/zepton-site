@@ -30,7 +30,7 @@ $ npm install zepton --save
 Then empty the main.js file and paste the following code:
 
 ```javascript
-import { createApp, render, $} from 'zepton';
+import Zepton, { createApp, render, $ } from 'zepton';
 
 function MainComponent() {
   const template = $('h1', 'Hello World');
