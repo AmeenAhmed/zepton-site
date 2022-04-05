@@ -458,11 +458,11 @@ export default function ParentComponent() {
     $('h1', 'Parent component'),
     $('input[type=text]', {
       $input: ev => state.message = `Hello ${ev.target.value}`
-    })
-    ChildComponent({ message })
+    }),
+    ChildComponent({ message: state.message })
   );
 
-  return render({ template });
+  return render({ state, template });
 }
 ```
 
@@ -479,11 +479,11 @@ export default function ParentComponent() {
     $('h1', 'Parent component'),
     $('input[type=text]', {
       $input: ev => state.message = `Hello ${ev.target.value}`
-    })
-    ChildComponent({ _ => message })
+    }),
+    ChildComponent({ message: _ => message })
   );
 
-  return render({ template });
+  return render({ state, template });
 }
 ```
 
@@ -520,7 +520,7 @@ export default function ParentComponent() {
     ChildComponent({ $clicked: text => state.message = text })
   );
 
-  render({ state, template });
+  return render({ state, template });
 }
 ```
 
@@ -534,7 +534,7 @@ export default function ChildComponent({ $clicked }) {
     $click: ev => $clicked('You clicked it!')
   }));
   
-  render({ template });
+  return render({ template });
 }
 ```
 

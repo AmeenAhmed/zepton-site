@@ -8,6 +8,13 @@ import tutorial7 from '../docs/tutorial/elseif-blocks.md?raw';
 import tutorial8 from '../docs/tutorial/each-block.md?raw';
 import tutorial9 from '../docs/tutorial/keyed-each-block.md?raw';
 import tutorial10 from '../docs/tutorial/attaching-events.md?raw';
+import tutorial11 from '../docs/tutorial/lifecycle-events.md?raw';
+import tutorial12 from '../docs/tutorial/components.md?raw';
+import tutorial13 from '../docs/tutorial/passing-props-to-components.md?raw';
+import tutorial14 from '../docs/tutorial/component-events.md?raw';
+import tutorial15 from '../docs/tutorial/component-slots.md?raw';
+import tutorial16 from '../docs/tutorial/dynamic-components.md?raw';
+
 
 export default [
   {
@@ -579,5 +586,497 @@ export default function() {
     },
     tutorial: tutorial10,
     hasEnd: true
-  }
+  },
+  {
+    name: 'Lifecycle events',
+    start: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, createState, $ } from 'zepton';
+
+export default function() {
+  const state = createState({
+    count: 0,
+  });
+  const template = $('.view',
+    $('div', _ => \`count => \$\{state.count\}\`),
+    $('button', 'Increment',  { $click: ev => state.count++ })
+  );
+  return render({ state, template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    end: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, createState, $ } from 'zepton';
+
+export default function() {
+  const state = createState({
+    count: 0,
+  });
+  const template = $('.view',
+    $('div', _ => \`count => \$\{state.count\}\`),
+    $('button', 'Increment', { $click: ev => state.count++ })
+  );
+  return render({
+    state,
+    template,
+    updated() {
+      alert('Updated...');
+    }
+  });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    tutorial: tutorial11,
+    hasEnd: true
+  },
+  {
+    name: 'Components',
+    start: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, $ } from 'zepton';
+
+export default function ParentComponent() {
+  const template = $('div',
+    $('h1', 'Parent component'));
+
+  return render({ template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        },
+        {
+          id: 'child_component.js',
+          name: 'child_component.js',
+          contents:
+`
+import { render, $ } from 'zepton';
+
+export default function ChildComponent() {
+  const template = $('div',
+    $('h1', 'Child component'));
+
+  return render({ template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    end: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, $ } from 'zepton';
+import ChildComponent from 'child_component.js';
+
+export default function ParentComponent() {
+  const template = $('div',
+    $('h1', 'Parent component'),
+    ChildComponent()
+  );
+
+  return render({ template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        },
+        {
+          id: 'child_component.js',
+          name: 'child_component.js',
+          contents:
+`
+import { render, $ } from 'zepton';
+
+export default function ChildComponent() {
+  const template = $('div',
+    $('h1', 'Child component'));
+
+  return render({ template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    tutorial: tutorial12,
+    hasEnd: true
+  },
+  {
+    name: 'Passing props to components',
+    start: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, createState, $ } from 'zepton';
+import ChildComponent from 'child_component.js';
+
+export default function ParentComponent() {
+  const state = createState({ message: 'Hello child component' });
+  const template = $('div',
+    $('h1', 'Parent component'),
+    $('input[type=text]', {
+      $input: ev => state.message = \`Hello \$\{ev.target.value\}\`
+    }),
+    ChildComponent({ message: state.message })
+  );
+
+  return render({ state, template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        },
+        {
+          id: 'child_component.js',
+          name: 'child_component.js',
+          contents:
+`
+import { render, $ } from 'zepton';
+
+export default function ParentComponent({ message }) {
+  const template = $('h1', message);
+
+  return render({ template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    end: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, createState, $ } from 'zepton';
+import ChildComponent from 'child_component.js';
+
+export default function ParentComponent() {
+  const state = createState({ message: 'Hello child component' });
+  const template = $('div',
+    $('h1', 'Parent component'),
+    $('input[type=text]', {
+      $input: ev => state.message = \`Hello \$\{ev.target.value\}\`
+    }),
+    ChildComponent({ message: _ => state.message })
+  );
+
+  return render({ state, template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        },
+        {
+          id: 'child_component.js',
+          name: 'child_component.js',
+          contents:
+`
+import { render, $ } from 'zepton';
+
+export default function ParentComponent({ message }) {
+  const template = $('h1', message);
+
+  return render({ template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    tutorial: tutorial13,
+    hasEnd: true
+  },
+  {
+    name: 'Component events',
+    start: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, createState, $ } from 'zepton';
+import ChildComponent from 'child_component.js';
+
+export default function ParentComponent() {
+  const state = createState({ message: 'Not clicked yet!' });
+  const template = $('.parent-view',
+    $('h1', _ => state.message),
+    ChildComponent()
+  );
+
+  return render({ state, template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        },
+        {
+          id: 'child_component.js',
+          name: 'child_component.js',
+          contents:
+`
+import { render, $ } from 'zepton';
+
+export default function ChildComponent() {
+  const template = $('.child-view', $('button', 'Click me!'));
+
+  return render({ template });
+}
+
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    end: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, createState, $ } from 'zepton';
+import ChildComponent from 'child_component.js';
+
+export default function ParentComponent() {
+  const state = createState({ message: 'Not clicked yet!' });
+  const template = $('.parent-view',
+    $('h1', _ => state.message),
+    ChildComponent({ $clicked: text => state.message = text })
+  );
+
+  return render({ state, template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        },
+        {
+          id: 'child_component.js',
+          name: 'child_component.js',
+          contents:
+`
+import { render, $ } from 'zepton';
+
+export default function ChildComponent({ $clicked }) {
+  const template = $('.child-view', $('button', 'Click me!', {
+    $click: ev => $clicked('You clicked it!')
+  }));
+
+  return render({ template });
+}
+
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    tutorial: tutorial14,
+    hasEnd: true
+  },
+  {
+    name: 'Component slots',
+    start: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { $, render, createState } from 'zepton';
+import ChildComponent from 'child_component.js';
+
+export default function ParentComponent() {
+  const state = createState({ count: 0 });
+
+  setInterval(_ => state.count++, 1000);
+
+  const template = $('.parent-view',
+    ChildComponent({
+      slot: _ => $('div', _ => \`count is \$\{state.count\}\`)
+    })
+  );
+
+  return render({ state, template });
+}
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        },
+        {
+          id: 'child_component.js',
+          name: 'child_component.js',
+          contents:
+`
+import { $, render} from 'zepton';
+
+export default function ChildComponent({ slot }) {
+  const template = $('.child-component', slot());
+
+  return render({ template })
+}
+
+`,
+          exports: {},
+          isEditable: false,
+          inEditMode: false
+        }
+      ]
+    },
+    tutorial: tutorial15,
+    hasEnd: false
+  },
+  {
+    name: 'Dynamic components',
+    start: {
+      files: [
+        {
+          id: 'app.js',
+          name: 'App.js',
+          contents:
+`
+import { render, createState, $, $component } from 'zepton';
+import Tab1 from 'tab1.js';
+import Tab2 from 'tab2.js';
+import Tab3 from 'tab3.js';
+
+export default function Main() {
+  const state = createState({ tab: 'tab1' });
+
+  const selectTab = name => state.tab = name;
+
+  const template = $('.main-view',
+    $('.tab-component',
+      $('.tab', 'Tab1', { $click: ev => selectTab('tab1') }),
+      $('.tab', 'Tab2', { $click: ev => selectTab('tab2') }),
+      $('.tab', 'Tab3', { $click: ev => selectTab('tab3') }),
+      { style: 'display: flex; gap: 8px;' }
+    ),
+    $component(_ => {
+      if(state.tab === 'tab1') return Tab1;
+      else if(state.tab === 'tab2') return Tab2;
+      else return Tab3;
+    })
+  )
+
+  return render({ state, template });
+}
+`,
+        exports: {},
+        isEditable: false,
+        inEditMode: false
+      },
+      {
+        id: 'tab1.js',
+        name: 'tab1.js',
+        contents:
+`
+import { render, $ } from 'zepton';
+
+export default function ChildComponent() {
+  const template = $('.child-component', $('h1', 'Tab1'));
+
+  return render({ template })
+}
+`,
+        exports: {},
+        isEditable: false,
+        inEditMode: false
+      },
+      {
+        id: 'tab2.js',
+        name: 'tab2.js',
+        contents:
+`
+import { render, $ } from 'zepton';
+
+export default function ChildComponent() {
+  const template = $('.child-component', $('h1', 'Tab2'));
+
+  return render({ template })
+}
+`,
+        exports: {},
+        isEditable: false,
+        inEditMode: false
+      },
+      {
+        id: 'tab3.js',
+        name: 'tab3.js',
+        contents:
+`
+import { render, $ } from 'zepton';
+
+export default function ChildComponent() {
+  const template = $('.child-component', $('h1', 'Tab3'));
+
+  return render({ template })
+}
+`,
+        exports: {},
+        isEditable: false,
+        inEditMode: false
+      }
+    ],
+  },
+  tutorial: tutorial16,
+  hasEnd: false
+ }
 ]
